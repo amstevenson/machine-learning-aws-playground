@@ -2,7 +2,7 @@
 # Creating zip files and deploying lambda functions
 #
 cd lambda_functions/createImagesFromPdf
-juni build
+make build
 cd ../../
 
 # Cleaning AWS function
