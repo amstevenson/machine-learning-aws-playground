@@ -1,9 +1,28 @@
 functions:
   # Name the zip file you want juni to create
   router:
-    # Use this docker image
     image: lambci/lambda:build-python3.7
-    requirements: ./src/requirements.txt
+    requirements: ./requirements/base.txt
+
     # Include these local modules in the artifact
     include:
       - ./src/lambda_function.py
+
+layers:
+
+  poppler-utils:
+    # Use this docker image
+    image: ml/poppler-utils
+    requirements: ./requirements/layer.txt
+
+#functions:
+#
+#  # Name the zip file you want juni to create
+#  router:
+#    # Use this docker image
+#    image: ml/poppler-utils
+#    requirements: ./requirements/base.txt
+#
+#    # Include these local modules in the artifact
+#    include:
+#      - ./src/lambda_function.py
