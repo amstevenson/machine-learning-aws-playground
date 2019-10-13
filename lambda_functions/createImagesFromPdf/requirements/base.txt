@@ -1,5 +1,0 @@
-pdf2image==1.9.0
-awscli==1.16.243
-botocore==1.12.248
-six~=1.11.0
-boto3==1.9.248
