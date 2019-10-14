@@ -5,8 +5,9 @@ a lambda function and a layer for the handler and requirements.
 
 So far this includes:
 
-1. A lambda function to convert a pdf to images using the `pdf2images` library
-and annoying `pdfinfo` binary. The layer contains the requirements/binaries. 
+1. `createImagesFromPdf`: A lambda function to convert a pdf to images using the `pdf2images` library
+and annoying `pdfinfo` binary. The layer contains the requirements/binaries. The images are then 
+grayscaled and resized in order for them to be used within a keras model.
 
 ## Quick Start
 

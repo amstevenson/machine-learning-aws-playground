@@ -22,6 +22,8 @@ def lambda_handler(event, context):
     images = pdf2image.convert_from_bytes(response['Body'].read())
     print(images)
 
+    # Apply transformations
+
     # TODO implement
     return {
         'statusCode': 200,
