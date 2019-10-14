@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: API Gateway with Lambda Token Authorizer
+Description: Lambda function to convert pdf to images
 
 Resources:
 
@@ -9,13 +9,16 @@ Resources:
     Properties:
       Runtime: python3.7
       Handler: lambda_function.lambda_handler
-      CodeUri: ./dist/router.zip
+      MemorySize: 512
+      Timeout: 5
+      CodeUri: ./dist/lambda-function.zip
+      Description: Converts pdf files to images, transforms and saves to an S3 bucket
       Layers:
         - !Ref CreateImagesFromPdfRequirements
 
   CreateImagesFromPdfRequirements:
     Type: 'AWS::Serverless::LayerVersion'
     Properties:
-      ContentUri: ./dist/poppler-utils.zip
+      ContentUri: ./dist/pdf2image-requirements.zip
       CompatibleRuntimes: # optional
         - python3.7

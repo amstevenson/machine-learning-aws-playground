@@ -6,7 +6,7 @@ sam_output=$(sam_template_base)-new.yml
 
 
 build:
-	docker build -t ml/poppler-utils -f docker/Dockerfile .
+	docker build -t docker-pdf2image -f docker/Dockerfile .
 	juni build
 
 package:

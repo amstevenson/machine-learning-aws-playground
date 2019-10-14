@@ -1,6 +1,6 @@
 functions:
   # Name the zip file you want juni to create
-  router:
+  lambda-function:
 #    image: lambci/lambda:build-python3.7
 #    requirements: ./requirements/base.txt
 
@@ -10,8 +10,8 @@ functions:
 
 layers:
 
-  poppler-utils:
+  pdf2image-requirements:
 
     # Use this docker image
-    image: ml/poppler-utils
+    image: docker-pdf2image
     requirements: ./requirements/layer.txt
