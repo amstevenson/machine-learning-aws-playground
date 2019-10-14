@@ -1,8 +1,12 @@
 # Machine Learning AWS
 
-At present, only contains a method of uploading lambda functions to AWS using
-CLI commands, which is combined with juniper to make it fairly easy to do...once you
-get your head around how it works.
+For each function under the the lambda_functions directory, creates
+a lambda function and a layer for the handler and requirements.
+
+So far this includes:
+
+1. A lambda function to convert a pdf to images using the `pdf2images` library
+and annoying `pdfinfo` binary. The layer contains the requirements/binaries. 
 
 ## Quick Start
 
