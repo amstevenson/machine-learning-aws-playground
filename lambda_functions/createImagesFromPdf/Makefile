@@ -1,4 +1,4 @@
-s3_bucket=test-create-images-bucket
+s3_bucket=test-create-images-input-bucket
 stack_name ?= create-images-from-pdf
 sam_template_base=sam
 sam_template=$(sam_template_base).yml

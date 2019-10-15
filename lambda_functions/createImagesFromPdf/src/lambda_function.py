@@ -23,7 +23,7 @@ def lambda_handler(event, context):
     print(images)
 
     # Apply transformations
-
+    
     # TODO implement
     return {
         'statusCode': 200,
@@ -40,7 +40,7 @@ if __name__ == "__main__":
             {
                 "s3": {
                     "bucket": {
-                        "name": "test-create-images-bucket"
+                        "name": "test-create-images-input-bucket"
                     },
                     "object": {
                         "key": "138322-007-001.pdf"
