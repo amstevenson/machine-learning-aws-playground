@@ -1,6 +1,41 @@
 import boto3
 import json
 import pdf2image
+import cv2
+import os
+import numpy as np
+import io
+from PIL import Image
+
+
+def upload_image_to_s3(image, image_location, s3_object):
+
+    # Turn into grayscale
+    img = np.array(image)
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+
+    # Recreate the PpmImage
+    img = Image.fromarray(img)
+
+    in_mem_file = io.BytesIO()
+    img.save(in_mem_file, 'PNG')
+    in_mem_file.seek(0)
+
+    s3_object.upload_fileobj(
+        Fileobj=in_mem_file,
+        Bucket='test-output-bucket',
+        Key=image_location
+    )
+
+
+def get_pdf_images(bucket_name, key, s3_object):
+    response = s3_object.get_object(
+        Bucket=bucket_name,
+        Key=key
+    )
+
+    # Get the object contents, and use pdf2image to get the images back
+    return pdf2image.convert_from_bytes(response['Body'].read())
 
 
 def lambda_handler(event, context):
@@ -13,18 +48,17 @@ def lambda_handler(event, context):
     # Construct s3 client
     s3 = boto3.client('s3')
 
-    response = s3.get_object(
-        Bucket=bucket,
-        Key=key
-    )
+    # Get images from pdf and determine filename
+    images = get_pdf_images(bucket, key, s3)
+    filename_without_ext = os.path.splitext(key)[0]
 
-    # Get the object contents
-    images = pdf2image.convert_from_bytes(response['Body'].read())
-    print(images)
+    for i in range(0, len(images)):
+        page = 'page_{}.png'.format(i + 1)
+        image_location = "{}/{}".format(filename_without_ext, page)
 
-    # Apply transformations
-    
-    # TODO implement
+        # Apply transformation to image to make it grayscale, then upload to S3
+        upload_image_to_s3(images[i], image_location, s3)
+
     return {
         'statusCode': 200,
         'body': json.dumps('Passes for now!')
@@ -40,7 +74,7 @@ if __name__ == "__main__":
             {
                 "s3": {
                     "bucket": {
-                        "name": "test-create-images-input-bucket"
+                        "name": "test-input-bucket"
                     },
                     "object": {
                         "key": "138322-007-001.pdf"
